@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="До 26-го">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>До 26-го</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E8EAF0;--glass:rgba(255,255,255,.74);--g2:rgba(255,255,255,.46);
+  --brd:rgba(255,255,255,.9);--line:rgba(0,0,0,.07);
+  --t1:#0C0E16;--t2:#4A4F66;--t3:#94A0B8;
+  --blue:#007AFF;--green:#34C759;--red:#FF3B30;--ora:#FF9500;--pur:#AF52DE;--teal:#30B0C7;
+  --sans:'Manrope',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:18px;
+  --sh:0 2px 20px rgba(0,0,0,.08),0 0 0 1px rgba(255,255,255,.7) inset;
+  --shs:0 1px 8px rgba(0,0,0,.06),0 0 0 1px rgba(255,255,255,.6) inset;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--t1);min-height:100vh;padding-bottom:90px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;width:400px;height:400px;top:-80px;right:-80px;border-radius:50%;background:radial-gradient(circle,rgba(0,122,255,.09),transparent 70%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;width:300px;height:300px;bottom:80px;left:-60px;border-radius:50%;background:radial-gradient(circle,rgba(52,199,89,.08),transparent 70%);pointer-events:none;z-index:0}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(232,234,240,.92);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.07);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.hdr-l{display:flex;flex-direction:column;gap:1px}
+.hdr-title{font-size:17px;font-weight:800;letter-spacing:-.025em}
+.hdr-date{font-size:11px;color:var(--t3);font-weight:600;font-family:var(--mono)}
+.pill{font-family:var(--mono);font-size:11px;font-weight:600;padding:5px 12px;border-radius:30px;white-space:nowrap}
+.p-ok{background:rgba(52,199,89,.12);color:#167A30;border:1px solid rgba(52,199,89,.25)}
+.p-warn{background:rgba(255,149,0,.12);color:#8C4A00;border:1px solid rgba(255,149,0,.28)}
+.p-bad{background:rgba(255,59,48,.11);color:#B0001A;border:1px solid rgba(255,59,48,.25)}
+
+/* LAYOUT */
+.wrap{max-width:540px;margin:0 auto;padding:14px 13px 0;position:relative;z-index:1}
+.tab{display:none}.tab.active{display:block}
+.sec{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin:18px 0 8px;display:flex;align-items:center;gap:6px}
+.sec:first-child{margin-top:0}
+
+/* CARD */
+.card{background:var(--glass);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-radius:var(--r);border:1px solid var(--brd);box-shadow:var(--sh);padding:18px;margin-bottom:10px}
+
+/* HERO */
+.hero{border-radius:var(--r);padding:22px 20px 18px;margin-bottom:10px;position:relative;overflow:hidden}
+.hero.blue{background:var(--blue);box-shadow:0 8px 36px rgba(0,122,255,.28)}
+.hero.green{background:var(--green);box-shadow:0 8px 36px rgba(52,199,89,.26)}
+.hero.red{background:var(--red);box-shadow:0 8px 36px rgba(255,59,48,.28)}
+.hero.ora{background:var(--ora);box-shadow:0 8px 36px rgba(255,149,0,.26)}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.09)}
+.hero-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:rgba(255,255,255,.65);margin-bottom:6px}
+.hero-num{font-family:var(--mono);font-size:clamp(30px,9vw,50px);font-weight:700;letter-spacing:-.03em;line-height:1;color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.72);line-height:1.5;position:relative;z-index:1}
+
+/* TWO HERO ROW */
+.hero-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.hero-sm{border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
+.hero-sm.blue{background:var(--blue);box-shadow:0 4px 20px rgba(0,122,255,.22)}
+.hero-sm.green{background:var(--green);box-shadow:0 4px 20px rgba(52,199,89,.20)}
+.hero-sm.red{background:var(--red);box-shadow:0 4px 20px rgba(255,59,48,.22)}
+.hero-sm.ora{background:var(--ora);box-shadow:0 4px 20px rgba(255,149,0,.20)}
+.hero-sm-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.65);margin-bottom:5px}
+.hero-sm-num{font-family:var(--mono);font-size:clamp(18px,5vw,24px);font-weight:700;color:#fff;letter-spacing:-.02em}
+
+/* STATS */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.sc{background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--shs);padding:13px 14px}
+.sc-lbl{font-size:11px;font-weight:600;color:var(--t3);margin-bottom:5px;line-height:1.3}
+.sc-val{font-family:var(--mono);font-size:16px;font-weight:700}
+.cb{color:var(--blue)}.cg{color:var(--green)}.cr{color:var(--red)}.co{color:var(--ora)}.cp{color:var(--pur)}
+
+/* PAYMENT BLOCK */
+.pay-block{background:var(--glass);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border-radius:var(--r);border:1px solid var(--brd);box-shadow:var(--sh);margin-bottom:10px;overflow:hidden}
+.pay-block-hdr{padding:16px 18px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pay-block-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800}
+.pay-block-meta{font-size:12px;font-weight:600;color:var(--t3);text-align:right;line-height:1.4}
+.pay-block-meta strong{font-family:var(--mono);color:var(--t2);font-size:13px}
+
+/* WEEK PARTS GRID */
+.week-parts{padding:14px 18px 16px;display:flex;flex-direction:column;gap:8px}
+.week-part{border-radius:13px;border:1.5px solid;overflow:hidden}
+.week-part.done{opacity:.7}
+.wp-top{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;gap:8px}
+.wp-left{display:flex;flex-direction:column;gap:2px}
+.wp-fri{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.wp-amt{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:-.02em}
+.wp-right{flex-shrink:0}
+.btn-vnесено{font-family:var(--sans);font-size:12px;font-weight:800;padding:8px 14px;border-radius:10px;border:none;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+/* states */
+.wp-state-pending .wp-fri{color:var(--t3)}
+.wp-state-pending .wp-amt{color:var(--t2)}
+.wp-state-pending{border-color:var(--line);background:rgba(255,255,255,.3)}
+.wp-state-pending .btn-vnесено{background:rgba(0,122,255,.1);color:var(--blue)}
+.wp-state-pending .btn-vnесено:hover{background:rgba(0,122,255,.18)}
+.wp-state-current .wp-fri{color:var(--blue)}
+.wp-state-current .wp-amt{color:var(--t1)}
+.wp-state-current{border-color:rgba(0,122,255,.3);background:rgba(0,122,255,.05)}
+.wp-state-current .btn-vnесено{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(0,122,255,.3)}
+.wp-state-current .btn-vnесено:hover{background:#0066DD}
+.wp-state-done .wp-fri{color:var(--green)}
+.wp-state-done .wp-amt{color:var(--green)}
+.wp-state-done{border-color:rgba(52,199,89,.3);background:rgba(52,199,89,.06)}
+.wp-state-done .btn-vnесено{background:rgba(52,199,89,.15);color:#167A30;font-size:11px}
+.wp-past-done{border-color:rgba(148,160,184,.2);background:rgba(148,160,184,.05)}
+.wp-past-done .wp-fri{color:var(--t3);text-decoration:line-through}
+.wp-past-done .wp-amt{color:var(--t3)}
+.wp-past-done .btn-vnесено{background:rgba(52,199,89,.1);color:#167A30;font-size:11px}
+/* after 26 */
+.wp-late{border-color:rgba(148,160,184,.15);background:rgba(148,160,184,.04)}
+.wp-late .wp-fri{color:var(--t3)}
+.wp-late .wp-amt{color:var(--t3)}
+.wp-late .btn-vnесено{display:none}
+.wp-late-label{font-size:11px;font-weight:600;color:var(--t3);padding:0 14px 11px;font-style:italic}
+
+/* FIELD */
+.field{margin-bottom:10px}.field:last-child{margin-bottom:0}
+.field label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.inp{width:100%;background:rgba(255,255,255,.62);border:1.5px solid rgba(0,0,0,.08);border-radius:13px;padding:13px 14px;color:var(--t1);font-family:var(--mono);font-size:17px;font-weight:600;outline:none;-webkit-appearance:none;transition:border-color .2s,background .2s,box-shadow .2s}
+.inp:focus{border-color:var(--blue);background:rgba(255,255,255,.94);box-shadow:0 0 0 4px rgba(0,122,255,.11)}
+.inp::placeholder{color:#B2B8CA;font-size:14px;font-family:var(--sans);font-weight:500}
+.field-hint{font-size:12px;color:var(--t3);margin-top:5px;line-height:1.5}
+.calc-prev{display:none;margin-top:8px;background:rgba(0,122,255,.08);border:1px solid rgba(0,122,255,.18);border-radius:11px;padding:10px 13px;align-items:center;justify-content:space-between;gap:10px}
+.calc-prev.show{display:flex}
+
+/* TOGGLE ROW */
+.tog-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--shs);margin-bottom:10px}
+.tog-info{display:flex;flex-direction:column;gap:3px}
+.tog-title{font-size:13px;font-weight:700}
+.tog-sub{font-size:12px;color:var(--t3)}
+.tog{position:relative;display:inline-block;width:44px;height:26px;cursor:pointer;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.tog-trk{position:absolute;inset:0;border-radius:13px;background:rgba(0,0,0,.14);transition:background .25s}
+.tog input:checked~.tog-trk{background:var(--blue)}
+.tog-th{position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;box-shadow:0 1px 4px rgba(0,0,0,.22);transition:transform .25s;pointer-events:none}
+.tog input:checked~.tog-th{transform:translateX(18px)}
+
+/* UTIL / SUBS */
+.pay-simple{border:1.5px solid var(--line);border-radius:13px;padding:13px;margin-bottom:8px;background:rgba(255,255,255,.4)}
+.ps-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ps-left{display:flex;flex-direction:column;gap:2px}
+.ps-name{font-size:13px;font-weight:700;color:var(--t1)}
+.ps-amount{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--t2)}
+.ps-due{font-size:11px;font-weight:600;color:var(--t3)}
+.btn-paid-sm{font-family:var(--sans);font-size:11px;font-weight:800;padding:7px 13px;border-radius:9px;border:none;cursor:pointer;transition:all .18s;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:4px}
+.btn-paid-sm.unpaid{background:rgba(0,122,255,.10);color:var(--blue)}
+.btn-paid-sm.unpaid:hover{background:rgba(0,122,255,.18)}
+.btn-paid-sm.paid{background:rgba(52,199,89,.14);color:#167A30}
+
+/* LIST ITEMS */
+.list-item{background:rgba(255,255,255,.46);border:1px solid rgba(0,0,0,.06);border-radius:13px;padding:13px;margin-bottom:8px}
+.li-grid{display:grid;gap:6px}
+.li-g2{grid-template-columns:1fr 1fr 28px}
+.li-g3{grid-template-columns:1.3fr 1fr .7fr 28px}
+.li-inp{width:100%;background:rgba(255,255,255,.70);border:1.5px solid rgba(0,0,0,.08);border-radius:10px;padding:9px 11px;color:var(--t1);font-size:14px;outline:none;-webkit-appearance:none;transition:border-color .2s}
+.li-inp[type=number]{font-family:var(--mono)}
+.li-inp[type=text]{font-family:var(--sans);font-weight:600}
+.li-inp:focus{border-color:var(--blue);background:rgba(255,255,255,.95)}
+.li-inp::placeholder{color:#B2B8CA;font-size:12px}
+.btn-rm{width:28px;height:28px;background:rgba(255,59,48,.09);border:1px solid rgba(255,59,48,.18);color:var(--red);font-size:18px;cursor:pointer;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;line-height:1}
+.btn-rm:hover{background:rgba(255,59,48,.20)}
+
+/* ADD BUTTON */
+.btn-add{width:100%;background:rgba(0,122,255,.06);border:1.5px dashed rgba(0,122,255,.28);border-radius:13px;padding:11px;color:var(--blue);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;text-align:center;transition:background .2s,border-color .2s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-add:hover{background:rgba(0,122,255,.12);border-color:rgba(0,122,255,.44)}
+
+/* SALARY PARTS */
+.parts-g{display:flex;gap:6px;margin:10px 0 8px;flex-wrap:wrap}
+.part{flex:1;min-width:58px;border-radius:12px;padding:9px 8px;text-align:center;border:1.5px solid transparent}
+.p-date{font-family:var(--mono);font-size:12px;font-weight:700;margin-bottom:2px}
+.p-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.p-amt{font-family:var(--mono);font-size:10px;font-weight:600;margin-top:4px}
+.pp{background:rgba(90,95,114,.07);border-color:rgba(90,95,114,.14)}.pp .p-date,.pp .p-tag,.pp .p-amt{color:var(--t3)}
+.pn{background:rgba(0,122,255,.09);border-color:rgba(0,122,255,.26)}.pn .p-date{color:var(--blue)}.pn .p-tag{color:rgba(0,122,255,.8)}.pn .p-amt{color:var(--blue)}
+.pf{background:rgba(52,199,89,.08);border-color:rgba(52,199,89,.22)}.pf .p-date,.pf .p-amt{color:#1A7030}.pf .p-tag{color:rgba(52,199,89,.9)}
+.pl{background:rgba(90,95,114,.04);border-color:rgba(90,95,114,.09);opacity:.5}.pl .p-date,.pl .p-tag,.pl .p-amt{color:var(--t3)}
+.sal-info{background:rgba(0,122,255,.07);border:1px solid rgba(0,122,255,.15);border-radius:12px;padding:11px 13px;font-size:12px;color:var(--t2);line-height:1.75;margin-top:2px}
+.sal-info strong{color:var(--blue);font-family:var(--mono);font-weight:700}
+.sal-warn{color:var(--ora);font-weight:700}
+
+/* CALENDAR */
+.cal-btn{width:100%;background:rgba(0,122,255,.07);border:1.5px solid rgba(0,122,255,.20);border-radius:13px;padding:11px 16px;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--blue);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;transition:background .2s}
+.cal-btn:hover{background:rgba(0,122,255,.12)}
+.cal-wrap{display:none;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:var(--r);border:1px solid var(--brd);box-shadow:var(--sh);padding:18px;margin-bottom:10px}
+.cal-wrap.open{display:block}
+.cal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-nav{background:rgba(0,122,255,.09);border:1px solid rgba(0,122,255,.2);border-radius:10px;padding:6px 12px;font-family:var(--sans);font-size:14px;font-weight:700;color:var(--blue);cursor:pointer;transition:background .15s;display:flex;align-items:center}
+.cal-nav:hover{background:rgba(0,122,255,.16)}
+.cal-title{font-size:15px;font-weight:800}
+.cal-grid{width:100%;border-collapse:collapse}
+.cal-grid th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);padding:5px 0;text-align:center}
+.cal-cell{text-align:center;padding:4px 2px;border-radius:9px}
+.cal-num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--t2);line-height:1.2}
+.cal-dots{display:flex;gap:2px;justify-content:center;margin-top:2px}
+.cal-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.cal-today .cal-num{background:var(--blue);color:#fff;border-radius:7px;padding:1px 5px;display:inline-block}
+.cal-past .cal-num{opacity:.36}
+.cal-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:11px;font-weight:600;color:var(--t2)}
+.cal-legend span{display:flex;align-items:center;gap:5px}
+.cal-legend span::before{content:'';display:block;width:7px;height:7px;border-radius:50%}
+.clt::before{background:var(--blue)}.cls::before{background:var(--green)}.cl15::before{background:var(--ora)}.cl26::before{background:var(--red)}.clsb::before{background:var(--pur)}
+
+/* ANALYTICS */
+.chart-row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.chart-col{flex:1;min-width:130px}
+.legend-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.legend-item:last-child{border-bottom:none}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.legend-text{font-size:12px;font-weight:600;color:var(--t2);flex:1}
+.legend-val{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--t1)}
+.legend-pct{font-size:10px;font-weight:600;color:var(--t3);margin-left:4px}
+.ctitle{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin-bottom:13px}
+.prog-item{margin-bottom:12px}.prog-item:last-child{margin-bottom:0}
+.prog-lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;font-size:12px;font-weight:600;color:var(--t2)}
+.prog-lbl span:last-child{font-family:var(--mono);color:var(--t1);font-size:12px}
+.prog-track{height:9px;background:rgba(0,0,0,.07);border-radius:5px;overflow:hidden}
+.prog-fill{height:100%;border-radius:5px;transition:width .5s ease}
+.export-row{display:flex;gap:8px;flex-wrap:wrap}
+.export-btn{display:inline-flex;align-items:center;gap:7px;background:var(--glass);border:1.5px solid var(--line);border-radius:12px;padding:10px 16px;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--t2);cursor:pointer;transition:background .15s}
+.export-btn:hover{background:rgba(255,255,255,.92)}
+.notice{border-radius:13px;padding:11px 13px;font-size:13px;line-height:1.6;margin-bottom:10px;font-weight:500}
+.n-ok{background:rgba(52,199,89,.09);border:1px solid rgba(52,199,89,.22);color:#14572A}
+.n-warn{background:rgba(255,149,0,.09);border:1px solid rgba(255,149,0,.22);color:#7A4200}
+.n-info{background:rgba(0,122,255,.07);border:1px solid rgba(0,122,255,.18);color:#003A99}
+
+/* NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;background:rgba(232,234,240,.94);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-top:1px solid rgba(0,0,0,.08);padding-bottom:env(safe-area-inset-bottom)}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 2px 7px;border:none;background:none;cursor:pointer;color:var(--t3);font-family:var(--sans);font-size:9.5px;font-weight:700;gap:3px;transition:color .15s;-webkit-tap-highlight-color:transparent}
+.nb.active{color:var(--blue)}.nb svg{width:22px;height:22px;stroke-width:1.7}
+
+/* DESKTOP */
+@media(min-width:580px){
+  body{padding-bottom:0}.bnav{display:none}
+  .dtabs{display:flex;gap:6px;padding:14px 13px 0;max-width:540px;margin:0 auto;position:relative;z-index:1}
+  .dtab{flex:1;padding:10px 8px;background:var(--g2);border:1px solid var(--brd);border-radius:13px 13px 0 0;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--t3);cursor:pointer;text-align:center;transition:all .18s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .dtab.active{background:var(--glass);color:var(--blue);border-bottom-color:transparent;box-shadow:0 -2px 0 var(--blue) inset}
+}
+@media(max-width:579px){.dtabs{display:none}}
+
+.empty{text-align:center;padding:12px 0 4px;font-size:12px;color:var(--t3)}
+.btn-reset{width:100%;background:rgba(255,59,48,.07);border:1.5px solid rgba(255,59,48,.22);color:var(--red);font-family:var(--sans);font-size:14px;font-weight:700;padding:13px;border-radius:14px;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-reset:hover{background:rgba(255,59,48,.13)}
+/* HISTORY */
+.history-item{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--brd);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;transition:box-shadow .18s}
+.history-item:hover{box-shadow:var(--shs)}
+.hi-left{display:flex;flex-direction:column;gap:3px}
+.hi-month{font-size:14px;font-weight:800}
+.hi-meta{font-size:11px;font-weight:600;color:var(--t3)}
+.hi-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+.hi-paid{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--green)}
+.hi-total{font-size:11px;font-weight:600;color:var(--t3)}
+.btn-archive{background:rgba(0,122,255,.09);border:1.5px solid rgba(0,122,255,.22);color:var(--blue);font-family:var(--sans);font-size:13px;font-weight:700;padding:11px 16px;border-radius:13px;cursor:pointer;transition:background .2s;display:flex;align-items:center;gap:6px;width:100%;justify-content:center;margin-bottom:10px}
+/* GOALS */
+.goal-card{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:10px}
+.goal-bar-bg{height:10px;border-radius:6px;overflow:hidden;margin:10px 0 6px}
+.goal-bar-fill{height:100%;border-radius:6px;transition:width .5s ease}
+/* NOTIF */
+.notif-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line);gap:10px;font-size:13px}
+.notif-row:last-child{border-bottom:none}
+.notif-lbl{display:flex;flex-direction:column;gap:2px;flex:1}
+.notif-title{font-weight:700}
+.notif-sub{font-size:11px;font-weight:500;color:var(--t3)}
+/* DARK THEME */
+@media(prefers-color-scheme:dark){
+:root{--bg:#0A0E1A;--glass:rgba(255,255,255,.07);--g2:rgba(255,255,255,.04);--brd:rgba(255,255,255,.11);--line:rgba(255,255,255,.07);--t1:#E8EDF8;--t2:#8892AA;--t3:#4A5268;--sh:0 2px 20px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.09) inset;--shs:0 1px 8px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.07) inset;}
+body::before{background:radial-gradient(circle,rgba(0,122,255,.14),transparent 70%)}
+body::after{background:radial-gradient(circle,rgba(52,199,89,.10),transparent 70%)}
+.hdr{background:rgba(10,14,26,.94)}
+.bnav{background:rgba(10,14,26,.96)}
+.inp,.li-inp{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.13);color:var(--t1)}
+.inp:focus,.li-inp:focus{background:rgba(255,255,255,.14)}
+.list-item,.pay-simple{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08)}
+.wp-state-pending{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.10)}
+.wp-state-current{background:rgba(0,122,255,.15);border-color:rgba(0,122,255,.35)}
+.wp-state-done{background:rgba(52,199,89,.12);border-color:rgba(52,199,89,.30)}
+.tog-row{background:rgba(255,255,255,.06)}
+}
+/* PRINT */
+@media print{.bnav,.hdr,.dtabs,.btn-add,.btn-reset,.btn-archive,.cal-btn,.export-row,button{display:none!important}body{padding:0;background:#fff}.tab{display:block!important}.wrap{max-width:100%;padding:10px}.card,.pay-block,.hero,.sc,.goal-card{box-shadow:none!important;border:1px solid #ddd!important;background:#fff!important;backdrop-filter:none!important}.hero,.hero.blue,.hero.green,.hero.red{color:#000!important;background:#f0f4ff!important}.hero-num,.hero-sub,.hero-lbl{color:#000!important}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-title">До 26-го</div>
+    <div class="hdr-date" id="hdr-date">—</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <button onclick="showNotifModal()" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--t3);display:flex" title="Уведомления">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </button>
+    <div class="pill p-ok" id="hdr-pill">—</div>
+  </div>
+</div>
+
+<div class="dtabs">
+  <button class="dtab active" onclick="go('home',this)">Обзор</button>
+  <button class="dtab"        onclick="go('pay', this)">Платежи</button>
+  <button class="dtab"        onclick="go('inc', this)">Доходы</button>
+  <button class="dtab" onclick="go('goals',this)">Цели</button>
+  <button class="dtab" onclick="go('hist',this)">История</button>
+  <button class="dtab" onclick="go('stat',this)">Анализ</button>
+</div>
+
+<div class="wrap">
+
+<!-- ══ ОБЗОР ══ -->
+<div class="tab active" id="tab-home">
+  <div id="h-hero"></div>
+  <div class="hero-row" id="h-row"></div>
+  <div class="tog-row">
+    <div class="tog-info">
+      <div class="tog-title">Учитывать подработки</div>
+      <div class="tog-sub" id="tog-sub">Выключено — только ¼ зарплаты + баланс</div>
+    </div>
+    <label class="tog">
+      <input type="checkbox" id="tog-extra" onchange="S.inclExtra=this.checked;save();renderAll()">
+      <div class="tog-trk"></div><div class="tog-th"></div>
+    </label>
+  </div>
+  <div id="h-notices"></div>
+  <div id="h-summary"></div>
+</div>
+
+<!-- ══ ПЛАТЕЖИ ══ -->
+<div class="tab" id="tab-pay">
+  <div id="pay-blocks"></div>
+  <div style="padding:4px 0 12px">
+    <button class="btn-reset" onclick="showReset()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+      Сбросить все данные
+    </button>
+  </div>
+</div>
+
+<!-- ══ ДОХОДЫ ══ -->
+<div class="tab" id="tab-inc">
+  <div class="sec" id="si-sal"></div>
+  <div class="card">
+    <div class="field">
+      <label>Зарплата за месяц</label>
+      <input class="inp" type="number" inputmode="numeric" placeholder="0" id="inp-salary" oninput="S.salary=num(this.value);save();renderAll()">
+    </div>
+    <div id="sal-parts"></div>
+  </div>
+  <div class="sec" id="si-bal"></div>
+  <div class="card">
+    <div class="field">
+      <label>Деньги на руках прямо сейчас</label>
+      <input class="inp" id="inp-bal" type="text" inputmode="decimal" placeholder="45000 + 12500 + 8000" autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="calc-prev" id="calc-prev">
+        <span style="font-size:12px;font-weight:600;color:var(--t3)">Итого</span>
+        <span id="calc-res" style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--blue)"></span>
+      </div>
+      <div class="field-hint">Автоматически входит в доход этой недели. Поддерживает выражения: <span style="font-family:var(--mono);color:var(--blue);font-size:12px">45000 + 12500</span> — нажми = или Enter.</div>
+    </div>
+  </div>
+  <div class="sec" id="si-extra"></div>
+  <div class="card">
+    <div id="list-extra"></div>
+    <button class="btn-add" onclick="addExtra()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Добавить доп. доход
+    </button>
+  </div>
+  <button class="cal-btn" id="cal-btn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Развернуть календарь
+  </button>
+  <div class="cal-wrap" id="cal-wrap">
+    <div class="cal-hdr">
+      <button class="cal-nav" id="cal-prev"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <div class="cal-title" id="cal-title">—</div>
+      <button class="cal-nav" id="cal-next"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <table class="cal-grid">
+      <thead><tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th></tr></thead>
+      <tbody id="cal-body"></tbody>
+    </table>
+    <div class="cal-legend">
+      <span class="clt">Сегодня</span><span class="cls">Зарплата</span>
+      <span class="cl15">ЖКХ (15-е)</span><span class="cl26">26-е</span><span class="clsb">Подписка</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ АНАЛИТИКА ══ -->
+<div class="tab" id="tab-stat">
+  <div class="sec" id="sa1"></div>
+  <div class="card">
+    <div class="ctitle" id="ct1"></div>
+    <div class="chart-row">
+      <div class="chart-col" style="max-width:160px;min-width:130px">
+        <svg id="donut-svg" viewBox="0 0 160 160" width="160" height="160" style="display:block;margin:0 auto"></svg>
+      </div>
+      <div class="chart-col" id="donut-leg"></div>
+    </div>
+  </div>
+  <div class="sec" id="sa2"></div>
+  <div class="card">
+    <div class="ctitle" id="ct2"></div>
+    <div id="stat-prog"></div>
+  </div>
+  <div class="sec" id="sa3"></div>
+  <div class="card">
+    <div class="ctitle" id="ct3"></div>
+    <div class="export-row">
+      <button class="export-btn" onclick="exportCSV()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Скачать CSV
+      </button>
+      <button class="export-btn" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Распечатать
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- GOALS TAB -->
+<div class="tab" id="tab-goals">
+  <div class="sec" id="sg1"></div>
+  <div id="goals-list"></div>
+  <button class="btn-add" onclick="showGoalModal()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Добавить цель
+  </button>
+</div>
+<!-- HISTORY TAB -->
+<div class="tab" id="tab-hist">
+  <div class="sec" id="sh1"></div>
+  <button class="btn-archive" onclick="archiveMonth()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 8v13H3V8"/><rect x="1" y="3" width="22" height="5" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+    Закрыть текущий месяц и сохранить в историю
+  </button>
+  <div id="history-list"></div>
+</div>
+
+</div><!-- /wrap -->
+
+<nav class="bnav">
+  <button class="nb active" id="bn-home" onclick="go('home',this,'bn-home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Обзор
+  </button>
+  <button class="nb" id="bn-pay" onclick="go('pay',this,'bn-pay')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    Платежи
+  </button>
+  <button class="nb" id="bn-inc" onclick="go('inc',this,'bn-inc')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Доходы
+  </button>
+  <button class="nb" id="bn-stat" onclick="go('stat',this,'bn-stat')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Анализ
+  </button>
+</nav>
+
+<!-- RESET DIALOG -->
+<div id="reset-ov" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.38);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px">
+  <div style="background:rgba(255,255,255,.97);border-radius:22px;padding:28px 24px;max-width:310px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.22);text-align:center">
+    <div style="width:48px;height:48px;background:rgba(255,59,48,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF3B30" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+    </div>
+    <div style="font-family:'Manrope',sans-serif;font-size:17px;font-weight:800;color:#0C0E16;margin-bottom:8px">Сбросить данные?</div>
+    <div style="font-family:'Manrope',sans-serif;font-size:13px;color:#4A4F66;line-height:1.5;margin-bottom:22px">Все введённые данные будут удалены без возможности восстановления.</div>
+    <div style="display:flex;gap:10px">
+      <button onclick="document.getElementById('reset-ov').style.display='none'" style="flex:1;padding:13px;background:rgba(0,0,0,.06);border:none;border-radius:13px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:#4A4F66;cursor:pointer">Отмена</button>
+      <button onclick="doReset()" style="flex:1;padding:13px;background:#FF3B30;border:none;border-radius:13px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer">Сбросить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── STORE ── */
+const KEY='p26_v9';
+let S={
+  salary:0, balance:0, extra:[], inclExtra:false,
+  forte:{amount:0, weeks:{}},   // weeks: {fridayDate: true/false}
+  red:  {amount:0, weeks:{}},
+  inst: [],                      // [{id,name,amount,weeks:{}}]
+  util: {amount:0, paid:false},
+  subs: [],                      // [{id,name,amount,day,paid}]
+  buf:  0,
+  goals:[], history:[], notifEnabled:false,
+};
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function guardState(){
+  ['forte','red'].forEach(k=>{
+    if(!S[k]||typeof S[k]!=='object')S[k]={amount:0,extra:0,weeks:{}};
+    if(!S[k].weeks)S[k].weeks={};
+    if(typeof S[k].amount!=='number')S[k].amount=0;
+    if(typeof S[k].extra!=='number')S[k].extra=0;
+  });
+  if(!S.util||typeof S.util!=='object')S.util={amount:0,paid:false};
+  if(typeof S.util.amount!=='number')S.util.amount=0;
+  if(!S.inst||!Array.isArray(S.inst))S.inst=[];
+  S.inst.forEach(i=>{if(!i.weeks)i.weeks={};if(typeof i.amount!=='number')i.amount=0;});
+  if(!S.subs||!Array.isArray(S.subs))S.subs=[];
+  if(!S.extra||!Array.isArray(S.extra))S.extra=[];
+  if(typeof S.salary!=='number')S.salary=0;
+  if(typeof S.balance!=='number')S.balance=0;
+  if(typeof S.buf!=='number')S.buf=0;
+  if(!S.goals||!Array.isArray(S.goals))S.goals=[];
+  if(!S.history||!Array.isArray(S.history))S.history=[];
+  if(typeof S.notifEnabled!=='boolean')S.notifEnabled=false;
+}
+
+function load(){
+  try{const r=localStorage.getItem(KEY);if(r){const p=JSON.parse(r);S={...S,...p};}}catch(e){}
+  guardState();
+}
+
+/* ── DATE ── */
+const NOW=new Date(),Y=NOW.getFullYear(),M=NOW.getMonth(),TODAY=NOW.getDate();
+const MN=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+const MNL=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+function dimM(y,m){return new Date(y,m+1,0).getDate()}
+function getFridays(y,m){const f=[],d=dimM(y,m);for(let i=1;i<=d;i++)if(new Date(y,m,i).getDay()===5)f.push(i);return f}
+
+/* ── FRIDAY CATEGORIES ── */
+function catFridays(){
+  const fr=getFridays(Y,M);let ns=false;
+  return fr.map(f=>{
+    if(f<TODAY)return{f,cat:'past'};
+    if(!ns){ns=true;return{f,cat:'next'}}
+    if(f>26)return{f,cat:'late'};
+    return{f,cat:'future'};
+  });
+}
+function fridaysBefore26(){return catFridays().filter(c=>c.f<=26)}
+function fridaysLeft(){return catFridays().filter(c=>(c.cat==='next'||c.cat==='future')&&c.f<=26)}
+
+/* ── FORMAT ── */
+function fmt(n){return Math.round(Math.abs(n)).toLocaleString('ru-KZ')+'\u202F₸'}
+function fmts(n){return(n<0?'−':'')+fmt(n)}
+function num(v){return parseFloat(v)||0}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){return(s||'').replace(/"/g,'&quot;')}
+
+/* ── CORE CALC ── */
+function calc(){
+  guardState();
+  const cats=catFridays();
+  const part=S.salary?S.salary/4:0;
+  const nextItem=cats.find(c=>c.cat==='next');
+  const fl=fridaysLeft();
+  const fb=fridaysBefore26();
+
+  const extraTotal=S.extra.reduce((s,e)=>s+(e.amount||0),0);
+  let weeklyIncome=(nextItem&&nextItem.f<=26?part:0)+(S.balance||0);
+  if(S.inclExtra)weeklyIncome+=extraTotal;
+
+  // Per-payment: amount split evenly across fridays before 26
+  function splitAmt(amount){return fb.length>0?amount/fb.length:amount}
+  function paidWeeks(weeks){return Object.values(weeks||{}).filter(Boolean).length}
+
+  const forteSlice=splitAmt(S.forte.amount);
+  const fortePaidW=paidWeeks(S.forte.weeks)*forteSlice;
+  const fortePaid=fortePaidW+(S.forte.extra||0);
+  const forteLeft=Math.max(0,S.forte.amount-fortePaid);
+
+  const redSlice=splitAmt(S.red.amount);
+  const redPaidW=paidWeeks(S.red.weeks)*redSlice;
+  const redPaid=redPaidW+(S.red.extra||0);
+  const redLeft=Math.max(0,S.red.amount-redPaid);
+
+  let instTotal=0,instPaid=0;
+  S.inst.forEach(i=>{
+    const sl=splitAmt(i.amount);
+    instTotal+=i.amount;
+    instPaid+=paidWeeks(i.weeks||{})*sl;
+  });
+  const instLeft=Math.max(0,instTotal-instPaid);
+
+  const utilAmt=S.util.paid?0:(S.util.amount||0);
+  const subsBef=S.subs.filter(s=>s.day>0&&s.day<=26);
+  const subsLeft=subsBef.reduce((s,x)=>s+(x.paid?0:(x.amount||0)),0);
+
+  const totalNeed=S.forte.amount+S.red.amount+instTotal+(S.util.amount||0)+subsBef.reduce((s,x)=>s+(x.amount||0),0)+(S.buf||0);
+  const totalPaid=fortePaid+redPaid+instPaid+(S.util.paid?S.util.amount:0)+subsBef.reduce((s,x)=>s+(x.paid?x.amount:0),0);
+  const totalRemaining=forteLeft+redLeft+instLeft+utilAmt+subsLeft+(S.buf||0);
+
+  // This week's share = remaining / fridays left
+  const setAside=fl.length>0?Math.ceil(totalRemaining/fl.length):totalRemaining;
+  const leftover=weeklyIncome-setAside;
+
+  return{cats,part,nextItem,fb,fl,extraTotal,weeklyIncome,
+    forte:S.forte, red:S.red, util:S.util,
+    forteSlice,fortePaid,forteLeft,
+    redSlice,redPaid,redLeft,
+    instTotal,instPaid,instLeft,
+    utilAmt,subsLeft,
+    totalNeed,totalPaid,totalRemaining,setAside,leftover,
+    splitAmt,paidWeeks};
+}
+
+/* ── TABS ── */
+let activeTab='home';
+function go(name,btn,bnId){
+  activeTab=name;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  document.querySelectorAll('.dtab,.nb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const bm={home:'bn-home',pay:'bn-pay',inc:'bn-inc',goals:'bn-goals',hist:'bn-hist',stat:'bn-stat'};
+  if(bnId)document.getElementById(bnId)?.classList.add('active');
+  else document.getElementById(bm[name])?.classList.add('active');
+  renderAll();
+}
+
+/* ── RENDER ALL ── */
+function renderAll(){
+  renderHeader();
+  if(activeTab==='home')renderHome();
+  if(activeTab==='pay')renderPay();
+  if(activeTab==='stat')renderStat();
+}
+
+/* ── HEADER ── */
+function renderHeader(){
+  document.getElementById('hdr-date').textContent=TODAY+' '+MN[M]+' '+Y;
+  const d=26-TODAY,pill=document.getElementById('hdr-pill');
+  if(d<0){pill.textContent='после 26-го';pill.className='pill p-bad'}
+  else if(d===0){pill.textContent='сегодня 26-е!';pill.className='pill p-bad'}
+  else if(d<=5){pill.textContent=d+' дн. до 26';pill.className='pill p-warn'}
+  else{pill.textContent=d+' дн. до 26';pill.className='pill p-ok'}
+}
+
+/* ── HOME ── */
+function renderHome(){
+  const D=calc();
+
+  // Toggle sub label
+  const ts=document.getElementById('tog-sub');
+  if(ts)ts.textContent=S.inclExtra&&D.extraTotal>0?`Подработки ${fmt(D.extraTotal)} включены`:'Выключено — только ¼ зарплаты + баланс';
+
+  // Hero
+  let hCls='blue',hSub='';
+  if(!D.totalNeed){hSub='Добавь платежи во вкладке «Платежи»'}
+  else if(D.totalRemaining===0){hCls='green';hSub='Все платежи этого месяца закрыты'}
+  else if(D.setAside>D.weeklyIncome){hCls='red';hSub=`Не хватает ${fmt(D.setAside-D.weeklyIncome)} — включи подработки или часть перейдёт на следующую неделю`}
+  else{hSub=`Доход недели: ${fmt(D.weeklyIncome)} · Останется: ${fmt(D.leftover)}`}
+  document.getElementById('h-hero').innerHTML=`<div class="hero ${hCls}"><div class="hero-lbl">Отложи на этой неделе</div><div class="hero-num">${fmt(D.setAside)}</div><div class="hero-sub">${hSub}</div></div>`;
+
+  // Mini hero row
+  document.getElementById('h-row').innerHTML=`
+    <div class="hero-sm blue"><div class="hero-sm-lbl">Доход недели</div><div class="hero-sm-num">${fmt(D.weeklyIncome)}</div></div>
+    <div class="hero-sm ${D.leftover>=0?'green':'red'}"><div class="hero-sm-lbl">Свободных</div><div class="hero-sm-num">${fmts(D.leftover)}</div></div>`;
+
+  // Notices
+  let ntc='';
+  if(D.totalRemaining===0&&D.totalNeed>0)ntc+='<div class="notice n-ok">Все платежи до 26-го закрыты.</div>';
+  else if(D.setAside>D.weeklyIncome&&D.totalNeed>0)ntc+=`<div class="notice n-warn">На этой неделе не хватает <b>${fmt(D.setAside-D.weeklyIncome)}</b>. Включи переключатель «Подработки» или следующая неделя возьмёт больше.</div>`;
+  document.getElementById('h-notices').innerHTML=ntc;
+
+  // Summary list
+  const items=[];
+  function addItem(name,amount,paid,color,perWeek){
+    if(!amount)return;
+    const left=Math.max(0,amount-paid);
+    const pct=Math.min(100,Math.round(paid/amount*100));
+    items.push({name,amount,paid,left,pct,color,perWeek});
+  }
+  addItem('Forte Bank',D.forte.amount||0,D.fortePaid,var_('blue'),D.forteSlice);
+  addItem('Kaspi RED',D.red.amount||0,D.redPaid,var_('red'),D.redSlice);
+  S.inst.forEach(i=>{if(i.amount)addItem(i.name||'Рассрочка',i.amount,D.paidWeeks(i.weeks||{})*D.splitAmt(i.amount),var_('ora'),D.splitAmt(i.amount))});
+  if(S.util.amount)addItem('Услуги ЖКХ',S.util.amount,S.util.paid?S.util.amount:0,var_('teal'),S.util.amount);
+  D.totalNeed&&(S.buf)&&addItem('Резерв',S.buf,0,'#94A0B8',S.buf);
+
+  if(!items.length){document.getElementById('h-summary').innerHTML='<div class="notice n-info">Добавь платежи во вкладке «Платежи» — здесь появится наглядная картина.</div>';return}
+
+  document.getElementById('h-summary').innerHTML=`<div class="card"><div class="ctitle" style="margin-bottom:10px">${svgI('list',13)} Все платежи до 26-го</div>`+
+    items.map(it=>`
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span style="font-size:13px;font-weight:700">${it.name}</span>
+          <span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--t2)">${fmt(it.paid)} / ${fmt(it.amount)}</span>
+        </div>
+        <div style="height:8px;background:rgba(0,0,0,.07);border-radius:5px;overflow:hidden">
+          <div style="height:100%;border-radius:5px;width:${it.pct}%;background:${it.pct>=100?'var(--green)':it.color};transition:width .4s ease"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;font-weight:600">
+          <span style="color:var(--t3)">Осталось: <span style="font-family:var(--mono);color:var(--t2)">${fmt(it.left)}</span></span>
+          ${it.left>0?`<span style="color:var(--t3)">Эта неделя: <span style="font-family:var(--mono);color:var(--t1)">${fmt(Math.ceil(it.left/Math.max(1,D.fl.length)))}</span></span>`:`<span style="color:var(--green);font-weight:700">✓ Закрыто</span>`}
+        </div>
+      </div>`).join('')+'</div>';
+}
+
+function var_(name){
+  const m={blue:'var(--blue)',red:'var(--red)',green:'var(--green)',ora:'var(--ora)',pur:'var(--pur)',teal:'var(--teal)'};
+  return m[name]||'var(--blue)';
+}
+
+/* ── PAY TAB ── */
+function renderPay(){
+  const D=calc();
+  let html='';
+  html+=payBlock('forte','Forte Bank','bank',var_('blue'),D.forteSlice,D);
+  html+=payBlock('red','Kaspi RED','card',var_('red'),D.redSlice,D);
+  html+=instBlock(D);
+  html+=utilBlock();
+  html+=subsBlock(D);
+  html+=`<div class="sec">${svgI('shield',13)} Резерв</div>
+  <div class="card">
+    <div class="field">
+      <label>Сумма резерва</label>
+      <input class="inp" type="number" inputmode="numeric" placeholder="0" id="inp-buf-pay" oninput="S.buf=num(this.value);save();updateWeekParts()">
+      <div class="field-hint">Войдёт в общую сумму «нужно до 26-го».</div>
+    </div>
+  </div>`;
+  document.getElementById('pay-blocks').innerHTML=html;
+  // Restore static input values AFTER render (not via value= in template)
+  restorePayInputs();
+}
+
+function restorePayInputs(){
+  const fi=[
+    ['pay-inp-forte', ()=>S.forte.amount||''],
+    ['pay-inp-red',   ()=>S.red.amount||''],
+    ['pay-inp-util',  ()=>S.util.amount||''],
+    ['inp-buf-pay',   ()=>S.buf||''],
+    ['pay-extra-forte',()=>S.forte.extra||''],
+    ['pay-extra-red',  ()=>S.red.extra||''],
+  ];
+  fi.forEach(([id,val])=>{const el=document.getElementById(id);if(el&&document.activeElement!==el)el.value=val()});
+  S.inst.forEach(i=>{
+    const na=document.getElementById('pay-inst-name-'+i.id);
+    const aa=document.getElementById('pay-inst-amt-'+i.id);
+    const ea=document.getElementById('pay-inst-extra-'+i.id);
+    if(na&&document.activeElement!==na)na.value=i.name||'';
+    if(aa&&document.activeElement!==aa)aa.value=i.amount||'';
+    if(ea&&document.activeElement!==ea)ea.value=i.extra||'';
+  });
+  S.subs.forEach(s=>{
+    ['name','amount','day'].forEach(f=>{
+      const el=document.getElementById(`pay-sub-${f}-${s.id}`);
+      if(el&&document.activeElement!==el)el.value=s[f]||'';
+    });
+  });
+}
+
+/* Only re-render the week-parts sections without touching inputs */
+function updateWeekParts(){
+  const D=calc();
+  ['forte','red'].forEach(key=>{
+    const container=document.getElementById('week-parts-'+key);
+    if(!container)return;
+    const origSlice=key==='forte'?D.forteSlice:D.redSlice;
+    const color=key==='forte'?var_('blue'):var_('red');
+    const item=S[key];
+    const total=item.amount||0;
+    const extra=item.extra||0;
+    const paidW=D.paidWeeks(item.weeks||{});
+    const paidAmt=paidW*origSlice+extra;
+    const left=Math.max(0,total-paidAmt);
+    const pct=total>0?Math.min(100,Math.round(paidAmt/total*100)):0;
+    const pendingWeeks=D.fb.filter(({f})=>!((item.weeks||{})[f]));
+    const effSlice=pendingWeeks.length>0?Math.max(0,left/pendingWeeks.length):origSlice;
+    container.innerHTML=buildWeekPartsHTML(key,item,effSlice,origSlice,D);
+    const meta=document.getElementById('pay-meta-'+key);
+    if(meta)meta.innerHTML=`Всего: <strong>${fmt(total)}</strong><br>Закрыто: <strong style="color:${pct>=100?'var(--green)':'var(--blue)'}">${fmt(paidAmt)}</strong>`;
+    const bar=document.getElementById('pay-bar-'+key);
+    if(bar){bar.style.width=pct+'%';bar.style.background=pct>=100?'var(--green)':color}
+    const pp=document.getElementById('pay-paid-'+key);
+    const pr=document.getElementById('pay-rem-'+key);
+    if(pp)pp.textContent=fmt(paidAmt)+' внесено';
+    if(pr)pr.textContent='Осталось: '+fmt(left);
+  });
+  if(activeTab==='home')renderHome();
+}
+
+function buildWeekPartsHTML(key,item,effSlice,origSlice,D){
+  if(!(item.amount))return'';
+  let html='';
+  D.fb.forEach(({f,cat})=>{
+    const isDone=(item.weeks||{})[f]||false;
+    let stateClass='wp-state-pending';
+    if(isDone&&cat==='past')stateClass='wp-past-done';
+    else if(isDone)stateClass='wp-state-done';
+    else if(cat==='next')stateClass='wp-state-current';
+    const checkIco=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const showAmt=isDone?origSlice:effSlice;
+    html+=`<div class="week-part ${stateClass}">
+      <div class="wp-top">
+        <div class="wp-left">
+          <div class="wp-fri">${f}-е ${cat==='next'?'· эта неделя':cat==='past'?'· прошедшая':''}</div>
+          <div class="wp-amt">${fmt(showAmt)}</div>
+        </div>
+        <div class="wp-right">
+          <button class="btn-vnесено" onclick="toggleWeek('${key}',${f})">${isDone?checkIco+' Внесено':'Внести'}</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  D.cats.filter(c=>c.cat==='late').forEach(({f})=>{
+    html+=`<div class="week-part wp-late"><div class="wp-top"><div class="wp-left">
+      <div class="wp-fri">${f}-е · после 26-го</div>
+      <div class="wp-amt" style="font-size:14px;color:var(--t3)">не входит в расчёт</div>
+    </div></div></div>`;
+  });
+  return html;
+}
+
+function payBlock(key,name,icon,color,slice,D){
+  const item=S[key]||{amount:0,extra:0,weeks:{}};
+  const total=item.amount||0;
+  const extra=item.extra||0;
+  const paidW=D.paidWeeks(item.weeks||{});
+  const paidAmt=paidW*slice+extra;
+  const left=Math.max(0,total-paidAmt);
+  const pct=total>0?Math.min(100,Math.round(paidAmt/total*100)):0;
+  // pending weeks get reduced slice after extra
+  const pendingWeeks=D.fb.filter(({f})=>!((item.weeks||{})[f]));
+  const effSlice=pendingWeeks.length>0?Math.max(0,left/pendingWeeks.length):slice;
+  const partsHTML=buildWeekPartsHTML(key,item,effSlice,slice,D,color);
+  return`<div class="sec">${svgI(icon,13)} ${name}</div>
+  <div class="pay-block">
+    <div class="pay-block-hdr">
+      <div class="pay-block-title">${svgI(icon,16)} ${name}</div>
+      <div class="pay-block-meta" id="pay-meta-${key}">Всего: <strong>${fmt(total)}</strong><br>Закрыто: <strong style="color:${pct>=100?'var(--green)':'var(--blue)'}">${fmt(paidAmt)}</strong></div>
+    </div>
+    <div style="padding:12px 18px 0">
+      <div class="field">
+        <label>Платёж в месяц</label>
+        <input class="inp" type="number" inputmode="numeric" placeholder="0" id="pay-inp-${key}"
+          oninput="updPayAmt('${key}',this.value)">
+      </div>
+      ${total?`<div style="margin-top:10px;margin-bottom:2px">
+        <label style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px">Внёс произвольно</label>
+        <div style="display:flex;gap:6px;align-items:center">
+          <input type="number" inputmode="numeric" class="inp" placeholder="0" id="pay-extra-${key}"
+            oninput="updPayExtra('${key}',this.value)"
+            style="flex:1;font-size:15px;padding:10px 13px;border-color:rgba(52,199,89,.3)">
+          <div style="font-size:11px;font-weight:600;color:var(--t3);white-space:nowrap;flex-shrink:0">уменьшает остаток</div>
+        </div>
+      </div>`:''}
+      <div id="pay-prog-wrap-${key}" style="${total?'':'display:none'}">
+        <div style="height:6px;background:rgba(0,0,0,.07);border-radius:4px;overflow:hidden;margin:12px 0 6px">
+          <div id="pay-bar-${key}" style="height:100%;border-radius:4px;width:${pct}%;background:${pct>=100?'var(--green)':color};transition:width .4s ease"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--t3);margin-bottom:12px">
+          <span id="pay-paid-${key}" style="color:var(--green);font-family:var(--mono)">${fmt(paidAmt)} внесено</span>
+          <span id="pay-rem-${key}">Осталось: <span style="font-family:var(--mono);color:var(--t2)">${fmt(left)}</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="week-parts" id="week-parts-${key}">${partsHTML}</div>
+  </div>`;
+}
+
+function updPayAmt(key,val){
+  if(!S[key]||typeof S[key]!=='object')S[key]={amount:0,extra:0,weeks:{}};
+  S[key].amount=num(val);
+  save();
+  const pw=document.getElementById('pay-prog-wrap-'+key);
+  if(pw)pw.style.display=S[key].amount?'':'none';
+  updateWeekParts();
+}
+
+function updPayExtra(key,val){
+  if(!S[key])S[key]={amount:0,extra:0,weeks:{}};
+  S[key].extra=num(val);
+  save();
+  updateWeekParts();
+}
+
+function toggleWeek(key,friday){
+  if(!S[key])S[key]={amount:0,weeks:{}};
+  if(!S[key].weeks)S[key].weeks={};
+  S[key].weeks[friday]=!S[key].weeks[friday];
+  save();updateWeekParts();
+}
+
+/* ── INSTALLS BLOCK ── */
+function instBlock(D){
+  if(!S.inst.length&&activeTab!=='pay')return'';
+  let itemsHTML='';
+  S.inst.forEach(i=>{
+    const slice=D.splitAmt(i.amount||0);
+    const extra=i.extra||0;
+    const paidW=D.paidWeeks(i.weeks||{});
+    const totalPaid=paidW*slice+extra;
+    const left=Math.max(0,(i.amount||0)-totalPaid);
+    const pct=(i.amount||0)>0?Math.min(100,Math.round(totalPaid/(i.amount||0)*100)):0;
+    // effective slice for pending weeks after extra deducted
+    const pendingWeeks=D.fb.filter(({f})=>!((i.weeks||{})[f]));
+    const effectiveSlice=pendingWeeks.length>0?Math.max(0,left/pendingWeeks.length):0;
+    let partsHTML='';
+    if(i.amount){
+      D.fb.forEach(({f,cat})=>{
+        const isDone=(i.weeks||{})[f]||false;
+        let sc='wp-state-pending';
+        if(isDone&&cat==='past')sc='wp-past-done';
+        else if(isDone)sc='wp-state-done';
+        else if(cat==='next')sc='wp-state-current';
+        const checkIco=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+        const showAmt=isDone?slice:effectiveSlice;
+        partsHTML+=`<div class="week-part ${sc}" style="margin-bottom:6px"><div class="wp-top"><div class="wp-left">
+          <div class="wp-fri">${f}-е${cat==='next'?' · эта неделя':cat==='past'?' · прошедшая':''}</div>
+          <div class="wp-amt">${fmt(showAmt)}</div>
+        </div><div class="wp-right"><button class="btn-vnесено" onclick="toggleInstWeek('${i.id}',${f})">${isDone?checkIco+' Внесено':'Внести'}</button></div></div></div>`;
+      });
+    }
+    itemsHTML+=`<div class="list-item" style="margin-bottom:12px">
+      <div class="li-grid li-g2" style="margin-bottom:10px">
+        <input type="text" class="li-inp" placeholder="Название" id="pay-inst-name-${i.id}"
+          oninput="updInstName('${i.id}',this.value)">
+        <input type="number" inputmode="numeric" class="li-inp" placeholder="Платёж ₸" id="pay-inst-amt-${i.id}"
+          oninput="updInstAmt('${i.id}',this.value)">
+        <button class="btn-rm" onclick="delInst('${i.id}')">×</button>
+      </div>
+      ${i.amount?`
+      <div style="margin-bottom:8px">
+        <label style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px">Внёс произвольно</label>
+        <div style="display:flex;gap:6px;align-items:center">
+          <input type="number" inputmode="numeric" class="li-inp" placeholder="0" id="pay-inst-extra-${i.id}"
+            oninput="updInstExtra('${i.id}',this.value)"
+            style="flex:1;border-color:rgba(52,199,89,.3)">
+          <div style="font-size:11px;font-weight:600;color:var(--t3);white-space:nowrap">уменьшает остаток</div>
+        </div>
+      </div>
+      <div style="height:5px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden;margin-bottom:5px">
+        <div id="ibar-${i.id}" style="height:100%;border-radius:3px;width:${pct}%;background:${pct>=100?'var(--green)':'var(--ora)'};transition:width .4s ease"></div>
+      </div>
+      <div id="iamt-${i.id}" style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:var(--t3);margin-bottom:10px">
+        <span style="color:var(--green);font-family:var(--mono)">${fmt(totalPaid)}</span>
+        <span>Осталось: ${fmt(left)}</span>
+      </div>
+      <div id="iwc-${i.id}">${partsHTML}</div>`:''}
+    </div>`;
+  });
+  return`<div class="sec">${svgI('bag',13)} Kaspi рассрочки</div>
+  <div class="card">
+    ${itemsHTML||'<div class="empty">Пока пусто</div>'}
+    <button class="btn-add" onclick="addInst()">${svgI('plus',14)} Добавить рассрочку</button>
+  </div>`;
+}
+
+function toggleInstWeek(id,friday){
+  const it=S.inst.find(x=>x.id===id);if(!it)return;
+  if(!it.weeks)it.weeks={};
+  it.weeks[friday]=!it.weeks[friday];
+  save();
+  // targeted update only — no full renderPay
+  refreshInstItem(id);
+  if(activeTab==='home')renderHome();
+}
+
+function updInstName(id,v){
+  const it=S.inst.find(x=>x.id===id);if(it){it.name=v;save();}
+}
+
+function updInstAmt(id,v){
+  const it=S.inst.find(x=>x.id===id);if(!it)return;
+  it.amount=num(v);save();
+  refreshInstItem(id);
+  if(activeTab==='home')renderHome();
+}
+
+function updInstExtra(id,v){
+  const it=S.inst.find(x=>x.id===id);if(!it)return;
+  it.extra=num(v);save();
+  refreshInstItem(id);
+  if(activeTab==='home')renderHome();
+}
+
+/* Refresh only the progress/weeks part of one install item, without touching inputs */
+function refreshInstItem(id){
+  const it=S.inst.find(x=>x.id===id);if(!it)return;
+  const D=calc();
+  const slice=D.splitAmt(it.amount||0);
+  const paidW=D.paidWeeks(it.weeks||{});
+  const extra=it.extra||0;
+  const totalPaid=paidW*slice+extra;
+  const left=Math.max(0,(it.amount||0)-totalPaid);
+  const pct=(it.amount||0)>0?Math.min(100,Math.round(totalPaid/(it.amount||0)*100)):0;
+  const fb=D.fb;
+
+  // update bar
+  const bar=document.getElementById(`ibar-${id}`);
+  if(bar){bar.style.width=pct+'%';bar.style.background=pct>=100?'var(--green)':'var(--ora)';}
+  const amtEl=document.getElementById(`iamt-${id}`);
+  if(amtEl)amtEl.innerHTML=`<span style="color:var(--green);font-family:var(--mono)">${fmt(totalPaid)}</span><span>Осталось: ${fmt(left)}</span>`;
+
+  // update week parts
+  const wc=document.getElementById(`iwc-${id}`);
+  if(!wc||!it.amount)return;
+  // calc effective slice after extra deducted from pending weeks
+  const pendingWeeks=fb.filter(({f})=>!((it.weeks||{})[f]));
+  const effectiveSlice=pendingWeeks.length>0?Math.max(0,left/pendingWeeks.length):0;
+  let html='';
+  fb.forEach(({f,cat})=>{
+    const isDone=(it.weeks||{})[f]||false;
+    let sc='wp-state-pending';
+    if(isDone&&cat==='past')sc='wp-past-done';
+    else if(isDone)sc='wp-state-done';
+    else if(cat==='next')sc='wp-state-current';
+    const checkIco=`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const showAmt=isDone?slice:effectiveSlice;
+    html+=`<div class="week-part ${sc}" style="margin-bottom:6px"><div class="wp-top"><div class="wp-left">
+      <div class="wp-fri">${f}-е${cat==='next'?' · эта неделя':cat==='past'?' · прошедшая':''}</div>
+      <div class="wp-amt">${fmt(showAmt)}</div>
+    </div><div class="wp-right"><button class="btn-vnесено" onclick="toggleInstWeek('${id}',${f})">${isDone?checkIco+' Внесено':'Внести'}</button></div></div></div>`;
+  });
+  wc.innerHTML=html;
+}
+
+function addInst(){S.inst.push({id:uid(),name:'',amount:0,extra:0,weeks:{}});renderPay();save()}
+function delInst(id){S.inst=S.inst.filter(x=>x.id!==id);renderPay();save();if(activeTab==='home')renderHome()}
+
+/* ── UTIL BLOCK ── */
+function utilBlock(){
+  const item=S.util;
+  return`<div class="sec">${svgI('home',13)} Услуги ЖКХ — до 15-го</div>
+  <div class="card">
+    <div class="field">
+      <label>Сумма за месяц</label>
+      <input class="inp" type="number" inputmode="numeric" placeholder="0" id="pay-inp-util"
+        oninput="updUtilAmt(this.value)">
+    </div>
+    <div id="util-detail" style="${item.amount?'':'display:none'}">
+      <div class="pay-simple" style="margin-top:12px">
+        <div class="ps-row">
+          <div class="ps-left">
+            <div class="ps-name">Услуги ЖКХ</div>
+            <div class="ps-amount" id="util-amt-lbl">${fmt(item.amount)}</div>
+            <div class="ps-due">До 15-го числа</div>
+          </div>
+          <button class="btn-paid-sm ${item.paid?'paid':'unpaid'}" id="util-paid-btn"
+            onclick="toggleUtilPaid()">
+            ${item.paid?svgI('check',12)+' Оплачено':'Оплатить'}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function updUtilAmt(v){
+  S.util.amount=num(v);save();
+  const d=document.getElementById('util-detail');
+  if(d)d.style.display=S.util.amount?'':'none';
+  const l=document.getElementById('util-amt-lbl');
+  if(l)l.textContent=fmt(S.util.amount);
+  if(activeTab==='home')renderHome();
+}
+
+function toggleUtilPaid(){
+  S.util.paid=!S.util.paid;save();
+  const btn=document.getElementById('util-paid-btn');
+  if(btn){
+    btn.className='btn-paid-sm '+(S.util.paid?'paid':'unpaid');
+    btn.innerHTML=S.util.paid?svgI('check',12)+' Оплачено':'Оплатить';
+  }
+  if(activeTab==='home')renderHome();
+}
+
+/* ── SUBS BLOCK ── */
+function subsBlock(){
+  let itemsHTML='';
+  S.subs.forEach(s=>{
+    const isBef=s.day>0&&s.day<=26;
+    itemsHTML+=`<div class="pay-simple" id="sub-item-${s.id}">
+      <div class="li-grid li-g3" style="margin-bottom:8px">
+        <input type="text" class="li-inp" placeholder="Название" id="pay-sub-name-${s.id}"
+          oninput="updSubField('${s.id}','name',this.value)">
+        <input type="number" inputmode="numeric" class="li-inp" placeholder="Сумма ₸" id="pay-sub-amount-${s.id}"
+          oninput="updSubField('${s.id}','amount',this.value)">
+        <input type="number" inputmode="numeric" class="li-inp" placeholder="День" min="1" max="31" id="pay-sub-day-${s.id}"
+          oninput="updSubField('${s.id}','day',this.value)">
+        <button class="btn-rm" onclick="delSub('${s.id}')">×</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span class="ps-due" id="sub-due-${s.id}">${isBef?'До 26-го':'После 26-го'}</span>
+        <button class="btn-paid-sm ${s.paid?'paid':'unpaid'}" id="sub-paid-btn-${s.id}"
+          onclick="toggleSubPaid('${s.id}')">
+          ${s.paid?svgI('check',12)+' Оплачено':'Оплатить'}
+        </button>
+      </div>
+    </div>`;
+  });
+  return`<div class="sec">${svgI('repeat',13)} Подписки</div>
+  <div class="card">
+    ${itemsHTML||'<div class="empty">Пока пусто</div>'}
+    <button class="btn-add" onclick="addSub()">${svgI('plus',14)} Добавить подписку</button>
+  </div>`;
+}
+
+function updSubField(id,k,v){
+  const it=S.subs.find(x=>x.id===id);if(!it)return;
+  it[k]=(k==='amount'||k==='day')?num(v):v;
+  save();
+  // only update due label, no full re-render
+  if(k==='day'){
+    const due=document.getElementById('sub-due-'+id);
+    if(due)due.textContent=(it.day>0&&it.day<=26)?'До 26-го':'После 26-го';
+  }
+  if(activeTab==='home')renderHome();
+}
+
+function toggleSubPaid(id){
+  const it=S.subs.find(x=>x.id===id);if(!it)return;
+  it.paid=!it.paid;save();
+  const btn=document.getElementById('sub-paid-btn-'+id);
+  if(btn){btn.className='btn-paid-sm '+(it.paid?'paid':'unpaid');btn.innerHTML=it.paid?svgI('check',12)+' Оплачено':'Оплатить';}
+  if(activeTab==='home')renderHome();
+}
+
+function addSub(){S.subs.push({id:uid(),name:'',amount:0,day:0,paid:false});renderPay();save()}
+function delSub(id){S.subs=S.subs.filter(x=>x.id!==id);renderPay();save();if(activeTab==='home')renderHome()}
+
+/* ── EXTRA INCOME ── */
+function addExtra(){S.extra.push({id:uid(),desc:'',amount:0});renderExtras();save()}
+function renderExtras(){
+  const el=document.getElementById('list-extra');if(!el)return;
+  if(!S.extra.length){el.innerHTML='<div class="empty">Пока пусто</div>';return}
+  el.innerHTML='';
+  S.extra.forEach(f=>{
+    const r=document.createElement('div');r.className='li-grid li-g2';r.style.marginBottom='8px';
+    r.innerHTML=`
+      <input type="text" class="li-inp" placeholder="Откуда" value="${esc(f.desc)}" oninput="updExtra('${f.id}','desc',this.value)">
+      <input type="number" inputmode="numeric" class="li-inp" placeholder="Сумма ₸" value="${f.amount||''}" oninput="updExtra('${f.id}','amount',this.value)">
+      <button class="btn-rm" onclick="delExtra('${f.id}')">×</button>`;
+    el.appendChild(r);
+  });
+}
+function updExtra(id,k,v){const it=S.extra.find(x=>x.id===id);if(it){it[k]=k==='amount'?num(v):v;save();if(activeTab==='home')renderHome()}}
+function delExtra(id){S.extra=S.extra.filter(x=>x.id!==id);renderExtras();save();if(activeTab==='home')renderHome()}
+
+/* ── SALARY PARTS ── */
+function renderSalParts(){
+  const el=document.getElementById('sal-parts');if(!el)return;
+  if(!S.salary){el.innerHTML='';return}
+  const cats=catFridays(),part=S.salary/4;
+  const pastN=cats.filter(c=>c.cat==='past').length;
+  const next=cats.find(c=>c.cat==='next');
+  const futN=cats.filter(c=>c.cat==='future').length;
+  const lateN=cats.filter(c=>c.cat==='late').length;
+  const still=(next&&next.f<=26?1:0)+futN;
+  const tm={past:'получена',next:'эта неделя',future:'придёт',late:'после 26'};
+  const cm={past:'pp',next:'pn',future:'pf',late:'pl'};
+  let h='<div class="parts-g">';
+  cats.forEach(({f,cat})=>{h+=`<div class="part ${cm[cat]}"><div class="p-date">${f}-е</div><div class="p-tag">${tm[cat]}</div><div class="p-amt">${fmt(part)}</div></div>`});
+  h+=`</div><div class="sal-info">Одна часть: <strong>${fmt(part)}</strong> · Получено: <strong>${pastN}/4</strong> · До 26-го ещё: <strong>${still} части</strong> (${fmt(still*part)})`;
+  if(lateN)h+=` · <span class="sal-warn">${lateN} часть — после 26-го</span>`;
+  h+='</div>';
+  el.innerHTML=h;
+}
+
+/* ── CALC FIELD ── */
+function initCalcField(){
+  const inp=document.getElementById('inp-bal');
+  const prev=document.getElementById('calc-prev');
+  const res=document.getElementById('calc-res');
+  if(!inp)return;
+  if(S.balance)inp.value=S.balance.toLocaleString('ru-KZ');
+  function se(e){
+    const c=e.replace(/,/g,'.').replace(/[×х]/g,'*').replace(/[÷:]/g,'/').replace(/−/g,'-').replace(/[^0-9+\-*/.() ]/g,'');
+    if(!c.trim())return null;
+    try{const v=Function('"use strict";return('+c+')')();return(typeof v==='number'&&isFinite(v)&&v>=0)?Math.round(v):null}catch(e){return null}
+  }
+  function upd(){const e=inp.value.trim();const hasOp=/[+\-*\/×÷−х]/.test(e)&&e.length>2;if(!hasOp){prev.classList.remove('show');return}const v=se(e);if(v!==null){res.textContent=v.toLocaleString('ru-KZ')+'\u202F₸';prev.classList.add('show')}else prev.classList.remove('show')}
+  function apply(){const e=inp.value.trim();if(!e){S.balance=0;save();return}const v=se(e);if(v!==null){S.balance=v;inp.value=v.toLocaleString('ru-KZ');prev.classList.remove('show')}else{S.balance=parseFloat(e.replace(/[^0-9.]/g,''))||0}save();if(activeTab==='home')renderHome()}
+  inp.addEventListener('input',()=>{if(inp.value.endsWith('=')){inp.value=inp.value.slice(0,-1);apply();inp.blur();return}upd()});
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key==='='){e.preventDefault();apply();inp.blur()}});
+  inp.addEventListener('blur',()=>{const e=inp.value.trim();if(/[+\-*\/×÷−х]/.test(e))apply();else{S.balance=parseFloat(e.replace(/\s/g,'').replace(',','.'))||0;save()}prev.classList.remove('show')});
+}
+
+/* ── CALENDAR ── */
+let calY=Y,calM=M,calOpen=false;
+function initCalendar(){
+  document.getElementById('cal-btn').addEventListener('click',()=>{calOpen=!calOpen;document.getElementById('cal-wrap').classList.toggle('open',calOpen);if(calOpen)renderCalendar()});
+  document.getElementById('cal-prev').addEventListener('click',()=>{calM--;if(calM<0){calM=11;calY--}renderCalendar()});
+  document.getElementById('cal-next').addEventListener('click',()=>{calM++;if(calM>11){calM=0;calY++}renderCalendar()});
+}
+function renderCalendar(){
+  const dim=dimM(calY,calM),first=(new Date(calY,calM,1).getDay()+6)%7;
+  const fr=getFridays(calY,calM),subDays=S.subs.filter(s=>s.day>0&&s.day<=dim).map(s=>s.day);
+  document.getElementById('cal-title').textContent=MNL[calM]+' '+calY;
+  let html='',dc=1;
+  for(let wk=0;wk<6;wk++){
+    if(dc>dim)break;html+='<tr>';
+    for(let dw=0;dw<7;dw++){
+      const ci=wk*7+dw;if(ci<first||dc>dim){html+='<td></td>';continue}
+      const d=dc;
+      const isT=calY===Y&&calM===M&&d===TODAY;
+      const isP=calY<Y||(calY===Y&&(calM<M||(calM===M&&d<TODAY)));
+      let dots='';
+      if(fr.includes(d))dots+=`<div class="cal-dot" style="background:var(--green)"></div>`;
+      if(d===15)dots+=`<div class="cal-dot" style="background:var(--ora)"></div>`;
+      if(d===26)dots+=`<div class="cal-dot" style="background:var(--red)"></div>`;
+      if(subDays.includes(d)&&!fr.includes(d)&&d!==15&&d!==26)dots+=`<div class="cal-dot" style="background:var(--pur)"></div>`;
+      html+=`<td><div class="cal-cell${isT?' cal-today':''}${isP?' cal-past':''}"><div class="cal-num">${d}</div>${dots?`<div class="cal-dots">${dots}</div>`:''}</div></td>`;
+      dc++;
+    }html+='</tr>';
+  }
+  document.getElementById('cal-body').innerHTML=html;
+}
+
+/* ── ANALYTICS ── */
+const COLS=['#3B82F6','#EF4444','#F97316','#EAB308','#A855F7','#6B7280'];
+function renderStat(){
+  const D=calc();
+  const segs=[];
+  if(D.forte.amount)segs.push({label:'Forte Bank',value:D.forte.amount,color:COLS[0]});
+  if(D.red.amount)segs.push({label:'Kaspi RED',value:D.red.amount,color:COLS[1]});
+  if(D.instTotal)segs.push({label:'Рассрочки',value:D.instTotal,color:COLS[2]});
+  if(S.util.amount)segs.push({label:'ЖКХ',value:S.util.amount,color:COLS[3]});
+  if(D.subsLeft>0)segs.push({label:'Подписки',value:D.subsLeft,color:COLS[4]});
+  if(S.buf)segs.push({label:'Резерв',value:S.buf,color:COLS[5]});
+  drawDonut('donut-svg',segs);
+  const total=segs.reduce((s,x)=>s+x.value,0)||1;
+  document.getElementById('donut-leg').innerHTML=segs.length?segs.map(s=>`<div class="legend-item"><div class="legend-dot" style="background:${s.color}"></div><div class="legend-text">${s.label}</div><div class="legend-val">${fmt(s.value)}<span class="legend-pct">${Math.round(s.value/total*100)}%</span></div></div>`).join(''):'<div class="empty">Нет данных</div>';
+  const pPaid=D.totalNeed>0?Math.min(100,Math.round(D.totalPaid/D.totalNeed*100)):0;
+  document.getElementById('stat-prog').innerHTML=`
+    <div class="prog-item"><div class="prog-lbl"><span>Закрыто платежей</span><span>${fmt(D.totalPaid)} / ${fmt(D.totalNeed)}</span></div><div class="prog-track"><div class="prog-fill" style="width:${pPaid}%;background:var(--green)"></div></div></div>
+    <div class="prog-item"><div class="prog-lbl"><span>Осталось</span><span>${fmt(D.totalRemaining)}</span></div><div class="prog-track"><div class="prog-fill" style="width:${100-pPaid}%;background:var(--red)"></div></div></div>`;
+  // inject ctitles
+  [['ct1','pie','Распределение расходов'],['ct2','trending','Прогресс'],['ct3','bar','Экспорт данных']].forEach(([id,icon,text])=>{
+    const el=document.getElementById(id);if(el)el.innerHTML=svgI(icon)+' '+text;
+  });
+  [['sa1','pie'],['sa2','trending'],['sa3','bar']].forEach(([id,icon],i)=>{
+    const el=document.getElementById(id);const texts=['Распределение расходов','Прогресс оплаты','Экспорт'];if(el)el.innerHTML=svgI(icon,13)+' '+texts[i];
+  });
+}
+function drawDonut(id,segs){
+  const el=document.getElementById(id);if(!el)return;
+  const total=segs.reduce((s,x)=>s+x.value,0);
+  if(!total){el.innerHTML='<text x="80" y="85" text-anchor="middle" font-size="12" fill="#94A0B8">Нет данных</text>';return}
+  const cx=80,cy=80,R=62,r=40;let a=-Math.PI/2,paths='';
+  segs.forEach(s=>{if(!s.value)return;const sw=(s.value/total)*2*Math.PI,gap=segs.length>1?.025:0,sa=a+gap/2,ea=a+sw-gap/2,x1=cx+R*Math.cos(sa),y1=cy+R*Math.sin(sa),x2=cx+R*Math.cos(ea),y2=cy+R*Math.sin(ea),xi1=cx+r*Math.cos(ea),yi1=cy+r*Math.sin(ea),xi2=cx+r*Math.cos(sa),yi2=cy+r*Math.sin(sa),lg=sw>Math.PI?1:0;paths+=`<path d="M${x1.toFixed(1)} ${y1.toFixed(1)} A${R} ${R} 0 ${lg} 1 ${x2.toFixed(1)} ${y2.toFixed(1)} L${xi1.toFixed(1)} ${yi1.toFixed(1)} A${r} ${r} 0 ${lg} 0 ${xi2.toFixed(1)} ${yi2.toFixed(1)} Z" fill="${s.color}"/>`;a+=sw});
+  el.innerHTML=paths+`<circle cx="${cx}" cy="${cy}" r="${r-1}" fill="rgba(255,255,255,.72)"/>`;
+}
+
+/* ── EXPORT ── */
+function exportCSV(){
+  const D=calc();
+  let csv='Категория;Платёж/мес;Внесено;Остаток\r\n';
+  if(D.forte.amount)csv+=`Forte Bank;${D.forte.amount};${D.fortePaid.toFixed(0)};${D.forteLeft.toFixed(0)}\r\n`;
+  if(D.red.amount)csv+=`Kaspi RED;${D.red.amount};${D.redPaid.toFixed(0)};${D.redLeft.toFixed(0)}\r\n`;
+  S.inst.forEach(i=>{if(i.amount){const p=D.paidWeeks(i.weeks||{})*D.splitAmt(i.amount);csv+=`${i.name||'Рассрочка'};${i.amount};${p.toFixed(0)};${Math.max(0,i.amount-p).toFixed(0)}\r\n`}});
+  if(S.util.amount)csv+=`ЖКХ;${S.util.amount};${S.util.paid?S.util.amount:0};${S.util.paid?0:S.util.amount}\r\n`;
+  csv+=`;\r\nОтложить на неделе;${D.setAside};;`;
+  const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`do26_${Y}_${String(M+1).padStart(2,'0')}.csv`;a.click();
+}
+
+/* ── RESET ── */
+function showReset(){document.getElementById('reset-ov').style.display='flex'}
+function doReset(){
+  document.getElementById('reset-ov').style.display='none';
+  localStorage.removeItem(KEY);
+  S={salary:0,balance:0,extra:[],inclExtra:false,forte:{amount:0,weeks:{}},red:{amount:0,weeks:{}},inst:[],util:{amount:0,paid:false},subs:[],buf:0,goals:[],history:[],notifEnabled:false};
+  guardState();
+  activeTab='home';
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-home').classList.add('active');
+  document.querySelectorAll('.nb,.dtab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bn-home')?.classList.add('active');
+  document.querySelector('.dtab')?.classList.add('active');
+  initUI();
+}
+
+/* ── SVG ICONS ── */
+const SVGD={
+  bank:'<line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/>',
+  card:'<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
+  bag:'<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+  home:'<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  repeat:'<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  wallet:'<rect x="2" y="8" width="20" height="13" rx="2"/><path d="M6 8V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/><circle cx="16" cy="14" r="1.2" fill="currentColor" stroke="none"/>',
+  pie:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+  trending:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+  bar:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+  list:'<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+  plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+};
+function svgI(n,s=16){return`<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0">${SVGD[n]||''}</svg>`}
+
+/* ── INJECT LABELS ── */
+function injectSecs(){
+  [['si-sal','wallet','Зарплата'],['si-bal','wallet','Деньги на руках'],['si-extra','zap','Доп. доход']].forEach(([id,icon,text])=>{
+    const el=document.getElementById(id);if(el)el.innerHTML=svgI(icon,13)+' '+text;
+  });
+}
+
+/* ── INIT ── */
+function initUI(){
+  renderHeader();
+  const is=document.getElementById('inp-salary');if(is)is.value=S.salary||'';
+  const ib=document.getElementById('inp-buf');if(ib)ib.value=S.buf||'';
+  const te=document.getElementById('tog-extra');if(te)te.checked=!!S.inclExtra;
+  initCalcField();
+  renderSalParts();
+  renderExtras();
+  renderAll();
+}
+
+load();
+injectSecs();
+initCalendar();
+initUI();
+
+
+
+
+/* ── HISTORY ── */
+const MN_FULL=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+
+function archiveMonth(){
+  const D=calc();
+  const label=MN_FULL[M]+' '+Y;
+  if(S.history.find(h=>h.label===label)){
+    if(!confirm('Запись за '+label+' уже есть. Перезаписать?'))return;
+    S.history=S.history.filter(h=>h.label!==label);
+  }
+  const snap={
+    label,
+    ts:Date.now(),
+    salary:S.salary,
+    totalNeed:D.totalNeed,
+    totalPaid:D.totalPaid,
+    remaining:D.totalRemaining,
+    forte:{amount:S.forte.amount,paid:D.fortePaid},
+    red:{amount:S.red.amount,paid:D.redPaid},
+    inst:S.inst.map(i=>({name:i.name,amount:i.amount,paid:D.paidWeeks(i.weeks||{})*D.splitAmt(i.amount)})),
+    util:{amount:S.util.amount,paid:S.util.paid?S.util.amount:0},
+    goals:JSON.parse(JSON.stringify(S.goals)),
+  };
+  S.history.unshift(snap);
+  if(S.history.length>24)S.history=S.history.slice(0,24);
+  save();
+  renderHistory();
+  alert('Месяц '+label+' сохранён в историю!');
+}
+
+function renderHistory(){
+  const el=document.getElementById('history-list');if(!el)return;
+  const sec=document.getElementById('sh1');
+  if(sec)sec.innerHTML=svgI('archive',13)+' История платежей';
+  if(!S.history.length){
+    el.innerHTML='<div class="card"><div class="empty" style="padding:20px 0">История пока пуста.<br>Нажми «Закрыть текущий месяц» когда закроешь все платежи.</div></div>';
+    return;
+  }
+  el.innerHTML=S.history.map(h=>{
+    const pct=h.totalNeed>0?Math.min(100,Math.round(h.totalPaid/h.totalNeed*100)):0;
+    return`<div class="history-item" onclick="showHistDetail('${h.label}')">
+      <div class="hi-left">
+        <div class="hi-month">${h.label}</div>
+        <div class="hi-meta">${pct}% закрыто · ${fmt(h.totalPaid)} из ${fmt(h.totalNeed)}</div>
+      </div>
+      <div class="hi-right">
+        <div class="hi-paid">${fmt(h.totalPaid)}</div>
+        <div class="hi-total">осталось ${fmt(h.remaining)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showHistDetail(label){
+  const h=S.history.find(x=>x.label===label);if(!h)return;
+  const modal=document.getElementById('hist-modal');
+  const title=document.getElementById('hist-modal-title');
+  const content=document.getElementById('hist-modal-content');
+  if(!modal||!title||!content)return;
+  title.innerHTML=svgI('archive',18)+' '+label;
+  let html='';
+  const rows=[
+    ['Зарплата',h.salary],
+    ['Forte Bank',h.forte?.amount],
+    ['Kaspi RED',h.red?.amount],
+    ...(h.inst||[]).map(i=>[i.name||'Рассрочка',i.amount]),
+    ['ЖКХ',h.util?.amount],
+  ].filter(r=>r[1]);
+  rows.forEach(([name,amt])=>{
+    html+=`<div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px"><span style="color:var(--t2)">${name}</span><span style="font-family:var(--mono);font-weight:700">${fmt(amt)}</span></div>`;
+  });
+  html+=`<div style="display:flex;justify-content:space-between;padding:12px 0 0;font-size:14px;font-weight:800"><span>Закрыто</span><span style="color:var(--green);font-family:var(--mono)">${fmt(h.totalPaid)}</span></div>`;
+  content.innerHTML=html;
+  modal.classList.add('open');
+}
+
+/* ── GOALS ── */
+let editingGoalId=null;
+
+function renderGoals(){
+  const el=document.getElementById('goals-list');if(!el)return;
+  const sec=document.getElementById('sg1');
+  if(sec)sec.innerHTML=svgI('target',13)+' Мои цели';
+  if(!S.goals.length){
+    el.innerHTML='<div class="card"><div class="empty" style="padding:20px 0">Целей пока нет.<br>Добавь первую — например, накопить на отпуск.</div></div>';
+    return;
+  }
+  const D=calc();
+  const fl=Math.max(1,D.fl.length);
+  const freePerWeek=Math.max(0,D.leftover);
+  el.innerHTML=S.goals.map(g=>{
+    const pct=g.target>0?Math.min(100,Math.round(g.saved/g.target*100)):0;
+    const left=Math.max(0,g.target-g.saved);
+    // weeks needed at current free pace
+    const weeksNeed=freePerWeek>0?Math.ceil(left/freePerWeek):null;
+    // deadline info
+    let deadlineInfo='';
+    if(g.deadline){
+      const [dy,dm]=g.deadline.split('-').map(Number);
+      const now=new Date();
+      const monthsLeft=(dy-now.getFullYear())*12+(dm-1-now.getMonth());
+      const weeksLeft=Math.max(0,monthsLeft*4);
+      const perWeek=weeksLeft>0?Math.ceil(left/weeksLeft):left;
+      deadlineInfo=`<span>${MN_FULL[dm-1]} ${dy} · ${fmt(perWeek)}/нед.</span>`;
+    }
+    const colors=['#007AFF','#34C759','#FF9500','#AF52DE','#30B0C7','#FF3B30'];
+    const color=colors[S.goals.indexOf(g)%colors.length];
+    return`<div class="goal-card">
+      <div class="goal-hdr">
+        <div class="goal-name" style="color:${color}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          ${g.name}
+        </div>
+        <div style="display:flex;gap:6px">
+          <button onclick="editGoal('${g.id}')" style="background:rgba(0,122,255,.09);border:1px solid rgba(0,122,255,.2);color:var(--blue);font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;cursor:pointer;font-family:var(--sans)">Изменить</button>
+          <button onclick="deleteGoal('${g.id}')" style="background:rgba(255,59,48,.09);border:1px solid rgba(255,59,48,.2);color:var(--red);font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;cursor:pointer;font-family:var(--sans)">×</button>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--t3);margin-bottom:4px">
+        <span>Накоплено: <span style="color:var(--t1);font-family:var(--mono)">${fmt(g.saved)}</span></span>
+        <span>Цель: <span style="color:var(--t1);font-family:var(--mono)">${fmt(g.target)}</span></span>
+      </div>
+      <div class="goal-bar-bg" style="background:rgba(0,0,0,.07)">
+        <div class="goal-bar-fill" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <div class="goal-labels">
+        <span style="color:${color};font-weight:700">${pct}%</span>
+        <span>Осталось: ${fmt(left)}</span>
+      </div>
+      ${left>0?`<div class="goal-wk" style="background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.08)">
+        ${deadlineInfo||`<span style="color:var(--t3)">При текущем темпе</span>`}
+        <span style="font-family:var(--mono);font-weight:700;color:${color}">${weeksNeed?weeksNeed+' нед.':'—'}</span>
+      </div>`:`<div style="background:rgba(52,199,89,.1);border:1px solid rgba(52,199,89,.25);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;color:#167A30;margin-top:8px;text-align:center">🎉 Цель достигнута!</div>`}
+      ${left>0&&g.saved<g.target?`<div style="margin-top:8px">
+        <label style="font-size:11px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px">Пополнить накопления</label>
+        <div style="display:flex;gap:6px">
+          <input type="number" inputmode="numeric" class="li-inp" placeholder="0" id="goal-dep-${g.id}" style="flex:1;font-family:var(--mono)">
+          <button onclick="depositGoal('${g.id}')" style="background:${color};border:none;color:#fff;font-family:var(--sans);font-size:12px;font-weight:800;padding:0 14px;border-radius:10px;cursor:pointer;white-space:nowrap">Добавить</button>
+        </div>
+      </div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function showGoalModal(id){
+  editingGoalId=id||null;
+  const g=id?S.goals.find(x=>x.id===id):null;
+  document.getElementById('goal-modal-title').textContent=g?'Редактировать цель':'Новая цель';
+  document.getElementById('gm-name').value=g?g.name:'';
+  document.getElementById('gm-target').value=g?g.target:'';
+  document.getElementById('gm-saved').value=g?g.saved:'';
+  document.getElementById('gm-deadline').value=g?g.deadline:'';
+  document.getElementById('goal-modal').style.display='flex';
+}
+function closeGoalModal(){document.getElementById('goal-modal').style.display='none'}
+
+function saveGoal(){
+  const name=document.getElementById('gm-name').value.trim();
+  const target=num(document.getElementById('gm-target').value);
+  const saved=num(document.getElementById('gm-saved').value);
+  const deadline=document.getElementById('gm-deadline').value;
+  if(!name||!target){alert('Введи название и сумму цели');return}
+  if(editingGoalId){
+    const g=S.goals.find(x=>x.id===editingGoalId);
+    if(g){g.name=name;g.target=target;g.saved=saved;g.deadline=deadline;}
+  }else{
+    S.goals.push({id:uid(),name,target,saved,deadline});
+  }
+  save();closeGoalModal();renderGoals();
+}
+
+function editGoal(id){showGoalModal(id)}
+
+function deleteGoal(id){
+  if(!confirm('Удалить цель?'))return;
+  S.goals=S.goals.filter(x=>x.id!==id);save();renderGoals();
+}
+
+function depositGoal(id){
+  const g=S.goals.find(x=>x.id===id);if(!g)return;
+  const inp=document.getElementById('goal-dep-'+id);
+  const amount=num(inp?.value);
+  if(!amount||amount<=0)return;
+  g.saved=Math.min(g.target,g.saved+amount);
+  save();renderGoals();
+}
+
+/* ── NOTIFICATIONS ── */
+function showNotifModal(){
+  const modal=document.getElementById('notif-modal');
+  const content=document.getElementById('notif-content');
+  if(!modal||!content)return;
+  const hasPerms='Notification' in window;
+  const granted=hasPerms&&Notification.permission==='granted';
+  const denied=hasPerms&&Notification.permission==='denied';
+  let html='';
+  if(!hasPerms){
+    html='<div class="notice n-info">Твой браузер не поддерживает уведомления. Попробуй открыть в Chrome или Safari.</div>';
+  }else if(denied){
+    html='<div class="notice n-warn">Уведомления заблокированы. Разреши их в настройках браузера для этого сайта.</div>';
+  }else{
+    html+=`<div class="notif-row">
+      <div class="notif-lbl"><div class="notif-title">Уведомления включены</div><div class="notif-sub">${granted?'Разрешено':'Нажми чтобы разрешить'}</div></div>
+      <label class="tog"><input type="checkbox" ${S.notifEnabled&&granted?'checked':''} id="tog-notif" onchange="toggleNotif(this.checked)"><div class="tog-trk"></div><div class="tog-th"></div></label>
+    </div>`;
+    if(S.notifEnabled&&granted){
+      html+=`<div class="notif-row"><div class="notif-lbl"><div class="notif-title">Напоминание — пятница</div><div class="notif-sub">«Не забудь отложить часть платежей»</div></div><span style="font-size:11px;font-weight:700;color:var(--green)">✓ Активно</span></div>`;
+      html+=`<div class="notif-row"><div class="notif-lbl"><div class="notif-title">Напоминание — 24-е число</div><div class="notif-sub">«До 26-го осталось 2 дня — проверь платежи»</div></div><span style="font-size:11px;font-weight:700;color:var(--green)">✓ Активно</span></div>`;
+      html+=`<div style="margin-top:14px"><button onclick="testNotif()" style="width:100%;padding:12px;background:rgba(0,122,255,.09);border:1.5px solid rgba(0,122,255,.22);border-radius:12px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:var(--blue);cursor:pointer">Отправить тестовое уведомление</button></div>`;
+    }
+  }
+  content.innerHTML=html;
+  modal.classList.add('open');
+}
+
+async function toggleNotif(on){
+  if(on){
+    const perm=await Notification.requestPermission();
+    if(perm==='granted'){
+      S.notifEnabled=true;save();
+      scheduleNotifs();
+      showNotifModal();
+    }else{
+      S.notifEnabled=false;save();
+      document.getElementById('tog-notif').checked=false;
+    }
+  }else{
+    S.notifEnabled=false;save();
+  }
+}
+
+function scheduleNotifs(){
+  if(!S.notifEnabled||Notification.permission!=='granted')return;
+  const now=new Date();
+  // Check if today is Friday → remind
+  if(now.getDay()===5){
+    const D=calc();
+    if(D.setAside>0){
+      setTimeout(()=>{
+        new Notification('До 26-го 💰',{body:`Не забудь отложить ${fmt(D.setAside)} на этой неделе`,icon:'',tag:'friday-reminder'});
+      },2000);
+    }
+  }
+  // Check if today is 24th → 2 days left warning
+  if(now.getDate()===24){
+    const D=calc();
+    if(D.totalRemaining>0){
+      setTimeout(()=>{
+        new Notification('До 26-го — 2 дня ⚠️',{body:`Осталось закрыть: ${fmt(D.totalRemaining)}`,icon:'',tag:'deadline-reminder'});
+      },3000);
+    }
+  }
+}
+
+function testNotif(){
+  if(Notification.permission==='granted'){
+    const D=calc();
+    new Notification('До 26-го — тест',{body:D.totalRemaining>0?`Осталось закрыть: ${fmt(D.totalRemaining)}`:'Все платежи закрыты! 🎉',tag:'test'});
+  }
+}
+
+/* ── PDF EXPORT ── */
+function exportPDF(){
+  window.print();
+}
+
+/* ── INJECT SECTION LABELS (extended) ── */
+function injectSecs(){
+  const map=[
+    ['si-sal','wallet','Зарплата'],['si-bal','wallet','Деньги на руках'],['si-extra','zap','Доп. доход'],
+    ['sa1','pie','Распределение расходов'],['sa2','trending','Прогресс'],['sa3','bar','Экспорт данных'],
+    ['sg1','target','Мои цели'],['sh1','archive','История платежей'],
+  ];
+  map.forEach(([id,icon,text])=>{const el=document.getElementById(id);if(el)el.innerHTML=svgI(icon,13)+' '+text});
+  [['ct1','pie','Распределение расходов'],['ct2','trending','Прогресс'],['ct3','bar','Экспорт данных']].forEach(([id,icon,text])=>{
+    const el=document.getElementById(id);if(el)el.innerHTML=svgI(icon)+' '+text;
+  });
+  const ls=document.getElementById('lbl-sal');if(ls)ls.innerHTML=svgI('cal')+' Зарплата за месяц (тенге)';
+  const lb=document.getElementById('lbl-bal');if(lb)lb.innerHTML=svgI('wallet')+' Деньги на руках (тенге)';
+  // Add archive icon to SVGD
+  SVGD['archive']='<path d="M21 8v13H3V8"/><rect x="1" y="3" width="22" height="5" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/>';
+  SVGD['target']='<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>';
+}
+
+/* ── MODAL CLOSE ON BACKDROP CLICK ── */
+function initModals(){
+  document.querySelectorAll('.modal').forEach(m=>{
+    m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')});
+  });
+}
+
+/* ── EXTENDED INIT ── */
+function initExtended(){
+  // Schedule notifications on load
+  scheduleNotifs();
+  // Render new tabs if needed
+  renderGoals();
+  renderHistory();
+  // Update export button in stat tab
+  const exportRow=document.querySelector('.export-row');
+  if(exportRow){
+    exportRow.innerHTML=`
+      <button class="export-btn" onclick="exportCSV()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Скачать CSV
+      </button>
+      <button class="export-btn" onclick="exportPDF()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+        Сохранить PDF
+      </button>`;
+  }
+}
+
+initExtended();
+initModals();
+</script>
+
+<!-- GOAL MODAL -->
+<div class="modal" id="goal-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:flex-end;justify-content:center">
+  <div style="background:rgba(248,249,252,.98);border-radius:22px 22px 0 0;padding:20px 18px 36px;width:100%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.2)">
+    <div style="width:36px;height:4px;background:rgba(0,0,0,.15);border-radius:2px;margin:0 auto 18px"></div>
+    <div style="font-size:17px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px" id="goal-modal-title">Новая цель</div>
+    <div class="field"><label>Название цели</label><input class="inp" type="text" placeholder="Например, отпуск или новый iPhone" id="gm-name"></div>
+    <div class="field" style="margin-top:10px"><label>Нужная сумма (тенге)</label><input class="inp" type="number" inputmode="numeric" placeholder="0" id="gm-target"></div>
+    <div class="field" style="margin-top:10px"><label>Уже накоплено (тенге)</label><input class="inp" type="number" inputmode="numeric" placeholder="0" id="gm-saved"></div>
+    <div class="field" style="margin-top:10px"><label>Дедлайн</label><input class="inp" type="month" id="gm-deadline" style="font-family:var(--sans);font-size:16px"></div>
+    <div style="display:flex;gap:10px;margin-top:18px">
+      <button onclick="closeGoalModal()" style="flex:1;padding:14px;background:rgba(0,0,0,.06);border:none;border-radius:13px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:#4A4F66;cursor:pointer">Отмена</button>
+      <button onclick="saveGoal()" style="flex:1;padding:14px;background:#007AFF;border:none;border-radius:13px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:#fff;cursor:pointer">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATIONS MODAL -->
+<div class="modal" id="notif-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:flex-end;justify-content:center">
+  <div style="background:rgba(248,249,252,.98);border-radius:22px 22px 0 0;padding:20px 18px 36px;width:100%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.2)">
+    <div style="width:36px;height:4px;background:rgba(0,0,0,.15);border-radius:2px;margin:0 auto 18px"></div>
+    <div style="font-size:17px;font-weight:800;margin-bottom:16px">Уведомления</div>
+    <div id="notif-content"></div>
+    <button onclick="document.getElementById('notif-modal').style.display='none'" style="width:100%;margin-top:16px;padding:14px;background:rgba(0,0,0,.06);border:none;border-radius:13px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:#4A4F66;cursor:pointer">Закрыть</button>
+  </div>
+</div>
+
+<!-- HISTORY DETAIL MODAL -->
+<div class="modal" id="hist-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:flex-end;justify-content:center">
+  <div style="background:rgba(248,249,252,.98);border-radius:22px 22px 0 0;padding:20px 18px 36px;width:100%;max-width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 -8px 40px rgba(0,0,0,.2)">
+    <div style="width:36px;height:4px;background:rgba(0,0,0,.15);border-radius:2px;margin:0 auto 18px"></div>
+    <div style="font-size:17px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px" id="hist-modal-title">История</div>
+    <div id="hist-modal-content"></div>
+    <button onclick="document.getElementById('hist-modal').style.display='none'" style="width:100%;margin-top:16px;padding:14px;background:rgba(0,0,0,.06);border:none;border-radius:13px;font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;color:#4A4F66;cursor:pointer">Закрыть</button>
+  </div>
+</div>
+
+</body>
+</html>
